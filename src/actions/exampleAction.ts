@@ -16,6 +16,7 @@ function exampleAction(example: number): Action<number> {
 }
 
 function exampleFetchAction(): (dispatch: ThunkDispatch<{}, {}, any>) => Promise<any> {
+    // @ts-ignore
     return async function(dispatch: ThunkDispatch<{}, {}, any>): Promise<any> {
         const response: AxiosResponse<any[]> = await jsonPlaceholder.get('/posts');
         dispatch({

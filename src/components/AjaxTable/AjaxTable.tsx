@@ -6,6 +6,7 @@ import {useHistory} from 'react-router';;
 import {FormattedMessage, IntlShape, useIntl} from 'react-intl';
 import {History} from 'history';
 import { IdentifiableDTO } from 'rest';
+import { Icon } from '@ant-design/compatible';
 
 export enum RouteMode { V = 'v', E = 'e', D = 'd' }
 
@@ -23,7 +24,7 @@ interface Props<T> extends TableProps<T> {
     addScreenReadMessage?: string;
     isPreview?: boolean;
     isEdit?: boolean;
-    handleDelete?: (id: number | string) => void;
+    handleDelete?: (id: number) => void;
     otherButtons?: (record: T) => any;
     actionColumnWidth?: number;
 }
@@ -59,7 +60,7 @@ export function AjaxTable<T extends IdentifiableDTO>(props: Props<T>): JSX.Eleme
                         <Button
                             size='small'
                             shape='circle'
-                            icon='search'
+                            icon={<Icon type='search' />}
                             title={formatMessage({id: 'common.preview'})}
                             onClick={(): void => redirect(record.id, RouteMode.V)}
                             style={{marginRight: 6}}
@@ -69,8 +70,8 @@ export function AjaxTable<T extends IdentifiableDTO>(props: Props<T>): JSX.Eleme
                         <Button
                             size='small'
                             shape='circle'
-                            icon='edit'
-                            title={formatMessage({id: 'ajax.table.edit.button.name'})}
+                            icon={<Icon type='edit'/>}
+                            title={formatMessage({id: 'common.edit'})}
                             onClick={(): void => redirect(record.id, RouteMode.E)}
                             style={{marginRight: 6}}
                         />
@@ -85,7 +86,7 @@ export function AjaxTable<T extends IdentifiableDTO>(props: Props<T>): JSX.Eleme
                                 <Button
                                     size='small'
                                     shape='circle'
-                                    icon='delete'
+                                    icon={<Icon type='delete' />}
                                     title={formatMessage({id: 'ajax.table.delete.button.name'})}
                                     className='button__icon--delete'
                                     style={{marginRight: 6}}
@@ -96,7 +97,7 @@ export function AjaxTable<T extends IdentifiableDTO>(props: Props<T>): JSX.Eleme
                     </span>
                 );
             },
-            title: <span> <FormattedMessage id={`ajax.table.column.button.name`}/></span>,
+            title: <span> <FormattedMessage id={`ajax.table.column.action`}/></span>,
             width: actionColumnWidth,
         };
     }
@@ -131,11 +132,12 @@ export function AjaxTable<T extends IdentifiableDTO>(props: Props<T>): JSX.Eleme
                     onClick={(): void => redirect(-1, RouteMode.E)}
                     style={{marginBottom: 12}}
                 >
-                    <FormattedMessage id={`ajax.table.add.button.name`}/>
+                    <Icon type='plus' />
+                    <FormattedMessage id={`ajax.table.add.button`}/>
                 </Button>
             }
             <Table<T>
-                // rowKey={(record: T, index: number): string => !_.isNil(record.id) ? record.id.toString() : index.toString()}
+                rowKey={(record: T): number => record.id}
                 columns={columns}
                 dataSource={dataSource}
                 loading={loading}

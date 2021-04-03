@@ -10,6 +10,7 @@ export const jobs: JobDTO[] = [
         forkMin: 7000,
         formMax: 12000,
         yourRate: 10000,
-        businessResponse: false
+        businessResponse: true,
+        description: 'desc'
     }
 ]

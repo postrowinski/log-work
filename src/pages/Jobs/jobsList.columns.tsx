@@ -17,7 +17,7 @@ export function getJobColumns(): JobsColumn[] {
         {
             dataIndex: 'business',
             key: 'business',
-            title: formatMessage({id: 'job.column.business'}),
+            title: formatMessage({id: 'job.label.business'}),
             width: 200
         },
         {
@@ -30,7 +30,7 @@ export function getJobColumns(): JobsColumn[] {
                     </>
                 );
             },
-            title: formatMessage({id: 'job.column.registrationDate'}),
+            title: formatMessage({id: 'job.label.registrationDate'}),
             width: 200
         },
         {
@@ -44,13 +44,13 @@ export function getJobColumns(): JobsColumn[] {
                     </>
                 )
             },
-            title: formatMessage({id: 'job.column.fork'}),
+            title: formatMessage({id: 'job.label.fork'}),
             width: 200
         } as any,
         {
             dataIndex: 'yourRate',
             key: 'yourRate',
-            title: formatMessage({id: 'job.column.yourRate'}),
+            title: formatMessage({id: 'job.label.yourRate'}),
             width: 200
         },
         {
@@ -63,7 +63,7 @@ export function getJobColumns(): JobsColumn[] {
                     </>
                 );
             },
-            title: formatMessage({id: 'job.column.businessResponse'}),
+            title: formatMessage({id: 'job.label.businessResponse'}),
             width: 200
         },
     ];

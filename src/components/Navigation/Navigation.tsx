@@ -4,9 +4,9 @@ import { Routing } from "./Routing";
 
 const Navigation: React.FC<{}> = (): JSX.Element => (
     <Router>
-        <>
+        <div style={{maxWidth: 1400, margin: '0 auto', padding: '40px 30px'}}>
             <Routing />
-        </>
+        </div>
     </Router>
 );
 

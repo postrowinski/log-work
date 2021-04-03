@@ -10,6 +10,10 @@ export const JobsList: React.FC<{}> = (): JSX.Element => {
         <>
             <AjaxTable<JobDTO>
                 isAdd
+                isEdit
+                isPreview
+                actionColumnWidth={160}
+                handleDelete={(id: number): void => {console.log(id)}}
                 url={paths.job}
                 dataSource={jobs}
                 columns={getJobColumns()}
