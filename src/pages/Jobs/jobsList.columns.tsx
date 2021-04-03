@@ -40,7 +40,7 @@ export function getJobColumns(): JobsColumn[] {
             render: (value: any, record: JobDTO): JSX.Element => {
                 return (
                     <>
-                        {record.forkMin} - {record.formMax}
+                        {record.forkMin} - {record.forkMax}
                     </>
                 )
             },

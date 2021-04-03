@@ -8,13 +8,16 @@ import { createStore, applyMiddleware, Store } from 'redux';
 import thunk from 'redux-thunk';
 import { reducer } from './reducers/reducer';
 import { Intl } from './components/Intl/Intl';
+import { AppContextWrapper } from './components/AppContext/AppContext';
 
 const store: Store = createStore(reducer, applyMiddleware(thunk));
 
 const App: React.FC<{}> = (): JSX.Element => {
     return (
         <Provider store={store}>
-            <Intl />
+            <AppContextWrapper>
+                <Intl />
+            </AppContextWrapper>
         </Provider>
     )
 };

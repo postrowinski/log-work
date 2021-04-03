@@ -13,7 +13,7 @@ export interface JobDTO extends IdentifiableDTO {
     business: string;
     address: string;
     forkMin?: number;
-    formMax?: number;
+    forkMax?: number;
     yourRate?: number;
     businessResponse?: boolean;
     description?: string;

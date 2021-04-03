@@ -9,6 +9,6 @@ export const Routing: React.FC<{}> = (): JSX.Element => (
     <>
         <Route exact path={paths.home} component={Home} />
         <Route path={paths.jobsList} component={JobsList} />
-        <Route path={paths.job} component={JobForm} />
+        <Route path={paths.jobParams} component={JobForm} />
     </>
 );

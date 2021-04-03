@@ -1,11 +1,12 @@
-import * as React from "react";
+import React, { useContext } from "react";
 import { AjaxTable } from '../../components/AjaxTable/AjaxTable';
 import { getJobColumns } from './jobsList.columns';
 import { JobDTO } from 'rest';
-import { jobs } from './jobs.data';
 import * as paths from '../../components/Navigation/pahts';
+import { Context } from '../../components/AppContext/AppContext';
 
 export const JobsList: React.FC<{}> = (): JSX.Element => {
+    const { jobs } = useContext(Context);
     return (
         <>
             <AjaxTable<JobDTO>
@@ -14,7 +15,7 @@ export const JobsList: React.FC<{}> = (): JSX.Element => {
                 isPreview
                 actionColumnWidth={160}
                 handleDelete={(id: number): void => {console.log(id)}}
-                url={paths.job}
+                url={paths.jobUrl}
                 dataSource={jobs}
                 columns={getJobColumns()}
                 pagination={{}}

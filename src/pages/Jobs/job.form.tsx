@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useFormik, FormikProps } from 'formik';
 import { Button, Form, Input, Row, Col, DatePicker, InputNumber } from 'antd';
 import { useHistory } from 'react-router-dom';
@@ -8,9 +8,11 @@ import * as Yup from 'yup';
 import * as _ from 'lodash';
 import { useIntl } from 'react-intl';
 import { JobDTO } from 'rest';
-import { jobs } from './jobs.data';
 import moment from 'moment';
 import Checkbox from 'antd/lib/checkbox/Checkbox';
+import { Context } from '../../components/AppContext/AppContext';
+import { useParams } from 'react-router-dom';
+import { RouteMode } from '../../components/AjaxTable/AjaxTable';
 
 const { useForm } = Form;
 const { TextArea } = Input;
@@ -21,6 +23,8 @@ export const JobForm: React.FC<{}> = (): JSX.Element => {
     useForm();
     const { formatMessage } = useIntl();
     const history: History = useHistory();
+    const { id, mode } = useParams();
+    const { jobs, setJobs } = useContext(Context);
     const [initialValues, setInitialValues] = useState<JobDTO>({} as JobDTO);
     const formik: FormikProps<JobDTO> = useFormik<JobDTO>({
         enableReinitialize: true,
@@ -34,21 +38,50 @@ export const JobForm: React.FC<{}> = (): JSX.Element => {
         onSubmit: (values: JobDTO): void => onSubmit(values)
     });
 
+    const isViewMode: boolean = mode === RouteMode.V;
+    const isNew: boolean = id === '-1';
+
     useEffect((): void => {
-        setInitialValues(jobs[0]);
+        if (!isNew) {
+            const job: JobDTO | undefined = findJob();
+            if (!_.isNil(job)) {
+                setInitialValues(job);
+            }
+        }
+        // @ts-ignore
+        console.log('isView: ', isViewMode)
     }, []);
 
+    function findJob(): JobDTO | undefined {
+        return _.find(jobs, (_job: JobDTO): boolean => _job.id.toString() === id);
+    }
+
     function onSubmit(values: JobDTO): void {
-        // tslint:disable-next-line
-        console.log(values);
-        history.push(paths.jobsList)
+        if (isNew) {
+            setJobs(
+                [
+                    ...jobs,
+                    {
+                        ...values,
+                        id: jobs.length + 1
+                    }
+                ]
+            );
+        } else {
+            const job: JobDTO | undefined = findJob();
+            if (!_.isNil(job)) {
+                const newJobs: JobDTO[] = _.remove(jobs, (j: JobDTO): boolean => {
+                    return j.id.toString() !== id;
+                });
+                setJobs([values].concat([...newJobs]));
+            }
+        }
+        history.push(paths.jobsList);
     }
 
     function onRegistrationDateChange(value: any): void {
         formik.setFieldValue('registrationDate', value);
     }
-    // businessResponse?: boolean;
-    // description?: string;
 
     return (
         <Form onFinish={formik.handleSubmit}>
@@ -86,7 +119,7 @@ export const JobForm: React.FC<{}> = (): JSX.Element => {
                 <Col span={8}>
                     <Form.Item label={formatMessage({id: 'job.label.registrationDate'})}>
                         <DatePicker
-                            defaultValue={moment(formik.initialValues.registrationDate) as any}
+                            value={moment(formik.values.registrationDate) as any}
                             onChange={onRegistrationDateChange}
                             placeholder={formatMessage({id: 'job.label.registrationDate'})}
                         />
@@ -109,10 +142,10 @@ export const JobForm: React.FC<{}> = (): JSX.Element => {
                 <Col span={8}>
                     <Form.Item label={formatMessage({id: 'job.label.forkMax'})}>
                         <InputNumber
-                            key={initialValues.formMax}
+                            key={initialValues.forkMax}
                             min={0}
-                            name={'formMax' as keyof JobDTO}
-                            defaultValue={initialValues.formMax}
+                            name={'forkMax' as keyof JobDTO}
+                            defaultValue={initialValues.forkMax}
                             onChange={(value: number): void => { formik.setFieldValue('forkMax', value)}}
                             placeholder={formatMessage({id: 'job.label.forkMax'})}
                         />
