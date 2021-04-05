@@ -38,7 +38,7 @@ export const JobForm: React.FC<{}> = (): JSX.Element => {
         onSubmit: (values: JobDTO): void => onSubmit(values)
     });
 
-    const isViewMode: boolean = mode === RouteMode.V;
+    const isEditMode: boolean = mode === RouteMode.E;
     const isNew: boolean = id === '-1';
 
     useEffect((): void => {
@@ -48,23 +48,32 @@ export const JobForm: React.FC<{}> = (): JSX.Element => {
                 setInitialValues(job);
             }
         }
-        // @ts-ignore
-        console.log('isView: ', isViewMode)
     }, []);
 
     function findJob(): JobDTO | undefined {
         return _.find(jobs, (_job: JobDTO): boolean => _job.id.toString() === id);
     }
 
+    function setNextId(): number {
+        if (jobs.length === 0) {
+            return 1;
+        }
+        const ids: number[] = jobs.map((_job: JobDTO): number => {
+            return _job.id;
+        });
+        const nextIncreametId: number | undefined = _.max(ids);
+        return !_.isNil(nextIncreametId) ? nextIncreametId + 1 : 1;
+    }
+
     function onSubmit(values: JobDTO): void {
         if (isNew) {
             setJobs(
                 [
-                    ...jobs,
                     {
                         ...values,
-                        id: jobs.length + 1
-                    }
+                        id: setNextId()
+                    },
+                    ...jobs
                 ]
             );
         } else {
@@ -83,84 +92,118 @@ export const JobForm: React.FC<{}> = (): JSX.Element => {
         formik.setFieldValue('registrationDate', value);
     }
 
+    function renderTextViewValue(value?: string | number): JSX.Element {
+        return (
+            <span>
+                {value}
+            </span>
+        )
+    }
+
+    function renderDateViewValue(value: moment.Moment): JSX.Element {
+        return (
+            <span>
+                {moment(value).format('YYYY-MM-DD')}
+            </span>
+        )
+    }
+
     return (
         <Form onFinish={formik.handleSubmit}>
             <Row gutter={gutter}>
                 <Col span={8}>
                     <Form.Item
                         label={formatMessage({id: 'job.label.business'})}
-                        required
+                        required={isEditMode}
                         validateStatus={formik.errors.business ? 'error' : undefined}
                         help={formik.errors.business}
                     >
-                        <Input
-                            name={'business' as keyof JobDTO}
-                            onChange={formik.handleChange}
-                            value={formik.values.business}
-                            placeholder={formatMessage({id: 'job.label.business'})}
-                        />
+                        {isEditMode ?
+                            <Input
+                                name={'business' as keyof JobDTO}
+                                onChange={formik.handleChange}
+                                value={formik.values.business}
+                                placeholder={formatMessage({id: 'job.label.business'})}
+                            /> :
+                            renderTextViewValue(formik.values.business)
+                        }
                     </Form.Item>
                 </Col>
                 <Col span={8}>
                     <Form.Item
                         label={formatMessage({id: 'job.label.address'})}
-                        required
+                        required={isEditMode}
                         validateStatus={formik.errors.address ? 'error' : undefined}
                         help={formik.errors.address}
                     >
-                        <Input
-                            name={'address' as keyof JobDTO}
-                            onChange={formik.handleChange}
-                            value={formik.values.address}
-                            placeholder={formatMessage({id: 'job.label.address'})}
-                        />
+                        {isEditMode ?
+                            <Input
+                                name={'address' as keyof JobDTO}
+                                onChange={formik.handleChange}
+                                value={formik.values.address}
+                                placeholder={formatMessage({id: 'job.label.address'})}
+                            /> :
+                            renderTextViewValue(formik.values.address)
+                        }
                     </Form.Item>
                 </Col>
                 <Col span={8}>
                     <Form.Item label={formatMessage({id: 'job.label.registrationDate'})}>
-                        <DatePicker
-                            value={moment(formik.values.registrationDate) as any}
-                            onChange={onRegistrationDateChange}
-                            placeholder={formatMessage({id: 'job.label.registrationDate'})}
-                        />
+                        {isEditMode ?
+                            <DatePicker
+                                value={moment(formik.values.registrationDate) as any}
+                                onChange={onRegistrationDateChange}
+                                placeholder={formatMessage({id: 'job.label.registrationDate'})}
+                            /> :
+                            renderDateViewValue(formik.values.registrationDate)
+                        }
                     </Form.Item>
                 </Col>
             </Row>
             <Row>
                 <Col span={8}>
                     <Form.Item label={formatMessage({id: 'job.label.forkMin'})}>
-                        <InputNumber
-                            key={initialValues.forkMin}
-                            min={0}
-                            name={'forkMin' as keyof JobDTO}
-                            defaultValue={initialValues.forkMin}
-                            onChange={(value: number): void => { formik.setFieldValue('forkMin', value)}}
-                            placeholder={formatMessage({id: 'job.label.forkMin'})}
-                        />
+                        {isEditMode ?
+                            <InputNumber
+                                key={initialValues.forkMin}
+                                min={0}
+                                name={'forkMin' as keyof JobDTO}
+                                defaultValue={initialValues.forkMin}
+                                onChange={(value: number): void => { formik.setFieldValue('forkMin', value)}}
+                                placeholder={formatMessage({id: 'job.label.forkMin'})}
+                            /> :
+                            renderTextViewValue(formik.values.forkMin)
+                        }
                     </Form.Item>
                 </Col>
                 <Col span={8}>
                     <Form.Item label={formatMessage({id: 'job.label.forkMax'})}>
-                        <InputNumber
-                            key={initialValues.forkMax}
-                            min={0}
-                            name={'forkMax' as keyof JobDTO}
-                            defaultValue={initialValues.forkMax}
-                            onChange={(value: number): void => { formik.setFieldValue('forkMax', value)}}
-                            placeholder={formatMessage({id: 'job.label.forkMax'})}
-                        />
+                        {isEditMode ?
+                            <InputNumber
+                                key={initialValues.forkMax}
+                                min={0}
+                                name={'forkMax' as keyof JobDTO}
+                                defaultValue={initialValues.forkMax}
+                                onChange={(value: number): void => { formik.setFieldValue('forkMax', value)}}
+                                placeholder={formatMessage({id: 'job.label.forkMax'})}
+                            /> :
+                            renderTextViewValue(formik.values.forkMax)
+                        }
                     </Form.Item>
                 </Col>
                 <Col span={8}>
                     <Form.Item label={formatMessage({id: 'job.label.yourRate'})}>
-                        <InputNumber
-                            key={initialValues.yourRate}
-                            min={0}
-                            name={'yourRate' as keyof JobDTO}
-                            defaultValue={initialValues.yourRate}
-                            onChange={(value: number): void => { formik.setFieldValue('yourRate', value)}}
-                            placeholder={formatMessage({id: 'job.label.yourRate'})}
-                        />
+                        {isEditMode ?
+                            <InputNumber
+                                key={initialValues.yourRate}
+                                min={0}
+                                name={'yourRate' as keyof JobDTO}
+                                defaultValue={initialValues.yourRate}
+                                onChange={(value: number): void => { formik.setFieldValue('yourRate', value)}}
+                                placeholder={formatMessage({id: 'job.label.yourRate'})}
+                            /> :
+                            renderTextViewValue(formik.values.yourRate)
+                        }
                     </Form.Item>
                 </Col>
             </Row>
@@ -171,6 +214,7 @@ export const JobForm: React.FC<{}> = (): JSX.Element => {
                             name={'businessResponse' as keyof JobDTO}
                             onChange={formik.handleChange}
                             checked={formik.values.businessResponse}
+                            disabled={!isEditMode}
                         />
                     </Form.Item>
                 </Col>
@@ -180,12 +224,15 @@ export const JobForm: React.FC<{}> = (): JSX.Element => {
                     label={formatMessage({id: 'job.label.description'})}
                     style={{width: '100%'}}
                 >
-                    <TextArea
-                        rows={5}
-                        name={'description' as keyof JobDTO}
-                        value={formik.values.description}
-                        onChange={formik.handleChange}
-                    />
+                    {isEditMode ?
+                        <TextArea
+                            rows={5}
+                            name={'description' as keyof JobDTO}
+                            value={formik.values.description}
+                            onChange={formik.handleChange}
+                        /> :
+                        renderTextViewValue(formik.values.description)
+                    }
                 </Form.Item>
             </Row>
             <Row gutter={gutter} justify='space-between'>
@@ -197,7 +244,7 @@ export const JobForm: React.FC<{}> = (): JSX.Element => {
                         {formatMessage({id: 'common.cancel'})}
                     </Button>
                 </Col>
-                <Col>
+                {isEditMode && <Col>
                     <Button
                         type='primary'
                         htmlType='submit'
@@ -205,7 +252,7 @@ export const JobForm: React.FC<{}> = (): JSX.Element => {
                     >
                         {formatMessage({id: 'common.submit'})}
                     </Button>
-                </Col>
+                </Col>}
             </Row>
         </Form>
     );

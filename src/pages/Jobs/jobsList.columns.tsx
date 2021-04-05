@@ -3,6 +3,8 @@ import { ColumnProps } from 'rc-table/lib/sugar/Column';
 import { JobDTO } from 'rest';
 import { useIntl } from 'react-intl';
 import moment from 'moment';
+import { Icon } from '@ant-design/compatible';
+import _ from 'lodash';
 
 export interface JobsColumn extends ColumnProps<JobDTO> {
     key: keyof JobDTO;
@@ -38,9 +40,13 @@ export function getJobColumns(): JobsColumn[] {
             key: 'fork',
             // @ts-ignore
             render: (value: any, record: JobDTO): JSX.Element => {
+                const {forkMax, forkMin} = record;
+                if (_.isNil(forkMin) && _.isNil(forkMax)) {
+                    return <></>;
+                }
                 return (
                     <>
-                        {record.forkMin} - {record.forkMax}
+                        {forkMin} - {forkMax}
                     </>
                 )
             },
@@ -58,9 +64,9 @@ export function getJobColumns(): JobsColumn[] {
             key: 'businessResponse',
             render: (value: boolean): JSX.Element => {
                 return (
-                    <>
-                        {value ? 'Tak' : 'Nie'}
-                    </>
+                    <div style={{display: 'flex', justifyContent: 'center'}}>
+                        {value ? <Icon type="check" style={{color: 'green'}} /> : <Icon type="close" style={{color: 'red'}} />}
+                    </div>
                 );
             },
             title: formatMessage({id: 'job.label.businessResponse'}),

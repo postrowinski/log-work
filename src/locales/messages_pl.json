@@ -4,14 +4,14 @@
     "ajax.table.column.action": "Akcje",
     "ajax.table.delete.button.name": "Usuń",
     "ajax.table.popconfirm.delete.name": "Czy na pewno chcesz usunąć ten rekord",
+    "common.cancel": "Anuluj",
+    "common.delete": "Usuń",
     "common.edit": "Edytuj",
     "common.preview": "Podgląd",
-    "common.delete": "Usuń",
     "common.submit": "Zapisz",
-    "common.cancel": "Anuluj",
     "form.validation.required": "Pole jest wymagane",
-    "job.label.business": "Firma",
     "job.label.address": "Adres firmy",
+    "job.label.business": "Firma",
     "job.label.businessResponse": "Czy firma odpowiedziała na CV",
     "job.label.description": "Opis",
     "job.label.fork": "Widełki",
@@ -21,5 +21,6 @@
     "job.label.yourRate": "Twoja zaproponowana stawka",
     "local.english": "Angielski",
     "local.polish": "Polski",
-    "nav.home": "Strona główna"
+    "nav.home": "Strona główna",
+    "nav.jobsList": "Do listy złożonych CV"
 }

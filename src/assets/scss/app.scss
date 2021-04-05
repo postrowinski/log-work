@@ -1,1 +1,10 @@
 @import 'variables';
+
+.button__icon--delete {
+    &:hover {
+        border-color: red;
+        color: red;
+    }
+}
+
+
