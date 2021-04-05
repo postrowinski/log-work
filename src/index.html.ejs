@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="pl" dir="ltr">
     <head>
-        <base href="/" />
+        <% if (webpackConfig.mode != 'production') { %>
+            <base href="/" />
+        <% } %>
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>Lista złożonych CV</title>
