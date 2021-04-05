@@ -1,25 +1,10 @@
 {
-  "name": "boiler_plate",
+  "name": "job_log",
   "version": "0.1.0",
-  "description": "Starter kit for React, Webpack (with Hot Module Replacement), Typescript and Babel.",
+  "description": "App to save history of your resume",
   "keywords": [
-    "react",
-    "redux",
-    "react-redux",
-    "redux-thunk",
-    "axios",
-    "formik",
-    "yup",
-    "webpack",
-    "typescript",
-    "babel",
-    "sass",
-    "hmr",
-    "starter",
-    "boilerplate",
-    "antd",
-    "lodash",
-    "moment"
+    "resume",
+    "work"
   ],
   "scripts": {
     "build": "yarn run clean-dist && webpack -p --config=configs/webpack/prod.js",
@@ -28,7 +13,9 @@
     "start": "yarn run start-dev",
     "start-dev": "webpack-dev-server --config=configs/webpack/dev.js",
     "start-prod": "yarn run build && node express.js",
-    "test": "jest --watch --coverage --config=configs/jest.json"
+    "test": "jest --watch --coverage --config=configs/jest.json",
+    "predeploy": "yarn run build",
+    "deploy": "gh-pages -d dist"
   },
   "license": "MIT",
   "devDependencies": {
@@ -96,6 +83,8 @@
     "react-router-dom": "5.2.0",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
-    "yup": "^0.32.9"
-  }
+    "yup": "^0.32.9",
+    "gh-pages": "^2.0.1"
+  },
+  "homepage": "https://postrowinski.github.io/log-work"
 }
