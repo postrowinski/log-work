@@ -154,6 +154,7 @@ export const JobForm: React.FC<{}> = (): JSX.Element => {
                                 value={moment(formik.values.registrationDate) as any}
                                 onChange={onRegistrationDateChange}
                                 placeholder={formatMessage({id: 'job.label.registrationDate'})}
+                                style={{width: 200}}
                             /> :
                             renderDateViewValue(formik.values.registrationDate)
                         }
@@ -171,6 +172,7 @@ export const JobForm: React.FC<{}> = (): JSX.Element => {
                                 defaultValue={initialValues.forkMin}
                                 onChange={(value: number): void => { formik.setFieldValue('forkMin', value)}}
                                 placeholder={formatMessage({id: 'job.label.forkMin'})}
+                                style={{width: 240}}
                             /> :
                             renderTextViewValue(formik.values.forkMin)
                         }
@@ -186,6 +188,7 @@ export const JobForm: React.FC<{}> = (): JSX.Element => {
                                 defaultValue={initialValues.forkMax}
                                 onChange={(value: number): void => { formik.setFieldValue('forkMax', value)}}
                                 placeholder={formatMessage({id: 'job.label.forkMax'})}
+                                style={{width: 240}}
                             /> :
                             renderTextViewValue(formik.values.forkMax)
                         }
@@ -201,6 +204,7 @@ export const JobForm: React.FC<{}> = (): JSX.Element => {
                                 defaultValue={initialValues.yourRate}
                                 onChange={(value: number): void => { formik.setFieldValue('yourRate', value)}}
                                 placeholder={formatMessage({id: 'job.label.yourRate'})}
+                                style={{width: 240}}
                             /> :
                             renderTextViewValue(formik.values.yourRate)
                         }
@@ -230,6 +234,7 @@ export const JobForm: React.FC<{}> = (): JSX.Element => {
                             name={'description' as keyof JobDTO}
                             value={formik.values.description}
                             onChange={formik.handleChange}
+                            placeholder={formatMessage({id: 'job.label.description'})}
                         /> :
                         renderTextViewValue(formik.values.description)
                     }

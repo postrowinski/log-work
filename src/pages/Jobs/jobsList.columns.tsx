@@ -60,6 +60,12 @@ export function getJobColumns(): JobsColumn[] {
             width: 200
         },
         {
+            dataIndex: 'description',
+            key: 'description',
+            title: formatMessage({id: 'job.label.description'}),
+            width: 200
+        },
+        {
             dataIndex: 'businessResponse',
             key: 'businessResponse',
             render: (value: boolean): JSX.Element => {
