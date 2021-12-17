@@ -7,3 +7,4 @@ tests/**/*.jsx
 Devnodejsnpm-cache/
 yarn-error.log
 build-types/
+.vscode

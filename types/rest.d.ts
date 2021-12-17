@@ -16,5 +16,6 @@ export interface JobDTO extends IdentifiableDTO {
     forkMax?: number;
     yourRate?: number;
     businessResponse?: boolean;
+    summary?: string;
     description?: string;
 }

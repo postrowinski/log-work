@@ -38,8 +38,7 @@ export function getJobColumns(): JobsColumn[] {
         {
             dataIndex: 'fork',
             key: 'fork',
-            // @ts-ignore
-            render: (value: any, record: JobDTO): JSX.Element => {
+            render: (_value: any, record: JobDTO): JSX.Element => {
                 const {forkMax, forkMin} = record;
                 if (_.isNil(forkMin) && _.isNil(forkMax)) {
                     return <></>;
@@ -60,9 +59,9 @@ export function getJobColumns(): JobsColumn[] {
             width: 200
         },
         {
-            dataIndex: 'description',
-            key: 'description',
-            title: formatMessage({id: 'job.label.description'}),
+            dataIndex: 'summary',
+            key: 'summary',
+            title: formatMessage({id: 'job.label.summary'}),
             width: 200
         },
         {
