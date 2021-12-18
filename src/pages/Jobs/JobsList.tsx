@@ -25,7 +25,7 @@ export const JobsList: React.FC<{}> = (): JSX.Element => {
                 actionColumnWidth={160}
                 handleDelete={removeRecord}
                 url={paths.jobUrl}
-                dataSource={jobs}
+                dataSource={_.orderBy(jobs, ['id'], ['desc'])}
                 columns={getJobColumns()}
                 pagination={{
                     pageSize: 10,
