@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { IntlProvider } from 'react-intl';
-import Navigation from '../Navigation/Navigation';
+import { Navigation } from '../Navigation/Navigation';
 import { Locale } from '../../actions/localeAction';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../reducers/reducer';

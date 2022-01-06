@@ -23,5 +23,11 @@
     "local.english": "Angielski",
     "local.polish": "Polski",
     "nav.home": "Strona główna",
-    "nav.jobsList": "Do listy złożonych CV"
+    "nav.jobsList": "Listy złożonych CV",
+    "nav.cache.management": "Zarządzanie danymi",
+    "job.label.total": "Całkowita liczba złożonych CV: {total}",
+    "job.label.total.answer": "Całkowita liczba odpowiedzi na CV: {total}",
+    "cache.management.copy.data.success": "Zapiszanie danych w postaci JSON, zakończone powidzeniem",
+    "cache.management.copy.data.error": "Zapiszanie danych w postaci JSON, zakończone nie powidzeniem",
+    "cache.management.copy.data.button": "Zapisz dane z cache do clipboardu"
 }

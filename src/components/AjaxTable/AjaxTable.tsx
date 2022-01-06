@@ -1,4 +1,4 @@
-import {Button, Popconfirm } from 'antd';
+import {Button, Popconfirm, Row } from 'antd';
 import Table, {ColumnProps, TableProps, TablePaginationConfig} from 'antd/lib/table';
 import * as _ from 'lodash';
 import React, {ReactNode} from "react";
@@ -27,6 +27,7 @@ interface Props<T> extends TableProps<T> {
     handleDelete?: (id: number) => void;
     otherButtons?: (record: T) => any;
     actionColumnWidth?: number;
+    elementOnTopTable?: () => JSX.Element;
 }
 
 export function AjaxTable<T extends IdentifiableDTO>(props: Props<T>): JSX.Element {
@@ -35,7 +36,7 @@ export function AjaxTable<T extends IdentifiableDTO>(props: Props<T>): JSX.Eleme
     const {formatMessage} = intl;
 
     const {total, size, pageSize} = props.pagination;
-    const {isAdd, dataSource, onChange, pagination, loading, url} = props;
+    const {isAdd, dataSource, onChange, pagination, loading, url, elementOnTopTable} = props;
     const {actionColumnWidth = 100} = props;
     const columns: AjaxColumnProps<T>[] = (setColumns());
 
@@ -126,16 +127,20 @@ export function AjaxTable<T extends IdentifiableDTO>(props: Props<T>): JSX.Eleme
 
     return (
         <div>
-            {isAdd &&
-                <Button
-                    type='primary'
-                    onClick={(): void => redirect(-1, RouteMode.E)}
-                    style={{marginBottom: 12}}
-                >
-                    <Icon type='plus' />
-                    <FormattedMessage id={`ajax.table.add.button`}/>
-                </Button>
-            }
+            <Row justify='space-between' align='middle'>
+                {isAdd &&
+                    <Button
+                        type='primary'
+                        onClick={(): void => redirect(-1, RouteMode.E)}
+                    >
+                        <Icon type='plus' />
+                        <FormattedMessage id={`ajax.table.add.button`}/>
+                    </Button>
+                }
+                {elementOnTopTable &&
+                    elementOnTopTable()
+                }
+            </Row>
             <Table<T>
                 rowKey={(record: T): number => record.id}
                 columns={columns}
